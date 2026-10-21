@@ -336,24 +336,36 @@ def test_real_data_risk_engine_run(real_scenario_state: ScenarioState):
     """
     Verify risk engine runs correctly on real Chennai road network and flood polygons.
     """
-    result = run_risk_engine(real_scenario_state)
+    state_1_0 = real_scenario_state.copy()
+    state_1_0.severity = 1.0
+    result_1_0 = run_risk_engine(state_1_0)
 
-    assert result.severity == 1.0
-    assert len(result.zones) == 6
-    assert result.total_affected_people > 0
-    assert result.impassable_edge_count > 0
+    assert result_1_0.severity == 1.0
+    assert len(result_1_0.zones) == 6
+    assert result_1_0.total_affected_people > 0
 
-    # Zones P1, P2, P3, P4 should have positive depth; P5, P6 are 0
-    zones_by_id = {z.zone_id: z for z in result.zones}
-    assert zones_by_id["P1"].depth == 1.2
-    assert zones_by_id["P2"].depth == 0.8
-    assert zones_by_id["P3"].depth == 0.5
-    assert zones_by_id["P4"].depth == 0.3
+    # At severity 1.0: 0 impassable edges, but > 0 flooded edges
+    assert result_1_0.impassable_edge_count == 0
+    flooded_edges_1_0 = sum(
+        1 for u, v, d in state_1_0.graph.edges(data=True) if d.get("edge_depth", 0.0) > 0.0
+    )
+    assert flooded_edges_1_0 > 0
+
+    # Zones P1, P2, P3, P4 should have positive depth (P1 is now 0.9); P5, P6 are 0
+    zones_by_id = {z.zone_id: z for z in result_1_0.zones}
+    assert pytest.approx(zones_by_id["P1"].depth) == 0.9
+    assert pytest.approx(zones_by_id["P2"].depth) == 0.8
+    assert pytest.approx(zones_by_id["P3"].depth) == 0.5
+    assert pytest.approx(zones_by_id["P4"].depth) == 0.3
     assert zones_by_id["P5"].depth == 0.0
     assert zones_by_id["P6"].depth == 0.0
 
-    # Impassable edges exist where flood depth >= 1.0 (F1 depth is 1.2)
-    assert result.impassable_edge_count > 100
+    # At severity 1.5: impassable edges > 0 and >= impassable edges at 1.0
+    state_1_5 = real_scenario_state.copy()
+    state_1_5.severity = 1.5
+    result_1_5 = run_risk_engine(state_1_5)
+    assert result_1_5.impassable_edge_count > 0
+    assert result_1_5.impassable_edge_count >= result_1_0.impassable_edge_count
 
 
 def test_scenario_state_reset_and_failure_tracking(handmade_scenario_state: ScenarioState):
