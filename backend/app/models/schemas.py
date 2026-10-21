@@ -140,3 +140,55 @@ class EvacuationRoutingResult(BaseAccessibleModel):
     differing_routes_count: int
     cut_off_zones: List[str]
     total_unmet_people: int = 0
+
+
+class ShelterAssignment(BaseAccessibleModel):
+    shelter_id: str
+    shelter_name: str
+    people: int
+    route_cost: float
+    route_length: float
+
+
+class ZoneOptimizationResult(BaseAccessibleModel):
+    zone_id: str
+    name: str
+    risk_level: str
+    affected_people: int
+    shelter_assignments: List[ShelterAssignment]
+    assigned_to_shelters: int
+    rescued_by_boat: int
+    unmet_people: int
+    rescue_team: bool
+    ambulance: bool
+    hospital_id: Optional[str] = None
+    hospital_name: Optional[str] = None
+    food_packets: int
+    medical_kits: int
+
+
+class ResourceUtilisation(BaseAccessibleModel):
+    rescue_teams_used: int
+    rescue_teams_available: int
+    ambulances_used: int
+    ambulances_available: int
+    boats_used: int
+    boats_available: int
+    food_packets_distributed: int
+    food_packets_available: int
+    medical_kits_distributed: int
+    medical_kits_available: int
+
+
+class OptimizationTotals(BaseAccessibleModel):
+    total_affected_people: int
+    total_assigned_to_shelters: int
+    total_rescued_by_boat: int
+    total_unmet_people: int
+    total_travel_cost: float
+    resource_utilisation: ResourceUtilisation
+
+
+class OptimizationResult(BaseAccessibleModel):
+    zones: List[ZoneOptimizationResult]
+    totals: OptimizationTotals
