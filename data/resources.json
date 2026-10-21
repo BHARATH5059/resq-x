@@ -1,0 +1,13 @@
+{
+  "base": {
+    "name": "Fire station (rescue base)",
+    "lat": 12.97685,
+    "lon": 80.22763,
+    "node": 300464595
+  },
+  "rescue_teams": 3,
+  "ambulances": 2,
+  "boats": 2,
+  "food_packets": 500,
+  "medical_kits": 100
+}

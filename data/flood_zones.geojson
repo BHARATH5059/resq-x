@@ -1,0 +1,149 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "F1",
+        "name": "Low-lying south-east",
+        "depth_m": 1.2,
+        "simulated": true
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              80.222,
+              12.972
+            ],
+            [
+              80.231,
+              12.972
+            ],
+            [
+              80.231,
+              12.978
+            ],
+            [
+              80.222,
+              12.978
+            ],
+            [
+              80.222,
+              12.972
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "F2",
+        "name": "Central basin",
+        "depth_m": 0.8,
+        "simulated": true
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              80.214,
+              12.978
+            ],
+            [
+              80.222,
+              12.978
+            ],
+            [
+              80.222,
+              12.984
+            ],
+            [
+              80.214,
+              12.984
+            ],
+            [
+              80.214,
+              12.978
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "F3",
+        "name": "North canal belt",
+        "depth_m": 0.5,
+        "simulated": true
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              80.21,
+              12.985
+            ],
+            [
+              80.218,
+              12.985
+            ],
+            [
+              80.218,
+              12.991
+            ],
+            [
+              80.21,
+              12.991
+            ],
+            [
+              80.21,
+              12.985
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "F4",
+        "name": "East pocket",
+        "depth_m": 0.3,
+        "simulated": true
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              80.226,
+              12.982
+            ],
+            [
+              80.231,
+              12.982
+            ],
+            [
+              80.231,
+              12.988
+            ],
+            [
+              80.226,
+              12.988
+            ],
+            [
+              80.226,
+              12.982
+            ]
+          ]
+        ]
+      }
+    }
+  ]
+}

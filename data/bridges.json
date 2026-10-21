@@ -1,0 +1,36 @@
+[
+  {
+    "id": "B1",
+    "name": "Velachery Lower Flyover",
+    "edges": [
+      [
+        10120160579,
+        12157030704
+      ]
+    ]
+  },
+  {
+    "id": "B2",
+    "name": "Velachery Upper Flyover",
+    "edges": [
+      [
+        10120161792,
+        2167149046
+      ]
+    ]
+  },
+  {
+    "id": "B3",
+    "name": "Bridge segment B3",
+    "edges": [
+      [
+        300162588,
+        300164051
+      ],
+      [
+        300164051,
+        300162588
+      ]
+    ]
+  }
+]

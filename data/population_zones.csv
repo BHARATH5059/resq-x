@@ -1,0 +1,7 @@
+id,name,lat,lon,population,vulnerable_share,node,snap_m
+P1,South-East Colony,12.9745,80.2265,2400,0.22,4252220057,24
+P2,Central Residential,12.981,80.218,3200,0.18,338406637,11
+P3,North Canal Settlement,12.9885,80.2135,1800,0.3,300163876,118
+P4,East Apartments,12.985,80.2285,2100,0.15,11832685264,36
+P5,West Layout,12.977,80.212,1500,0.2,2167027707,15
+P6,North-East Market Area,12.99,80.2215,1200,0.12,11938949875,85
