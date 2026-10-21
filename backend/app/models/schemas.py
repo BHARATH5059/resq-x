@@ -1,4 +1,4 @@
-from typing import Any, List, Optional
+from typing import Any, Dict, List, Optional
 from pydantic import BaseModel, Field
 
 
@@ -108,3 +108,35 @@ class RiskAssessmentResult(BaseAccessibleModel):
     zones: List[ZoneRisk]
     total_affected_people: int
     impassable_edge_count: int
+
+
+class RouteDetail(BaseAccessibleModel):
+    status: str = "ok"  # "ok" or "no_route"
+    cost: float
+    length: float
+    path: List[int]
+    route_geojson: Optional[Dict[str, Any]] = None
+    flooded_edges_count: int = 0
+    max_flood_depth: float = 0.0
+
+
+class ZoneShelterRoute(BaseAccessibleModel):
+    zone_id: str
+    shelter_id: str
+    status: str = "ok"  # "ok" or "no_route"
+    cost: float
+    length: float
+    path: List[int]
+    route_geojson: Optional[Dict[str, Any]] = None
+    flooded_edges_count: int = 0
+    max_flood_depth: float = 0.0
+    baseline_route: Optional[RouteDetail] = None
+
+
+class EvacuationRoutingResult(BaseAccessibleModel):
+    severity: float
+    routes: Dict[str, Dict[str, ZoneShelterRoute]]
+    unreachable_pairs_count: int
+    differing_routes_count: int
+    cut_off_zones: List[str]
+    total_unmet_people: int = 0
