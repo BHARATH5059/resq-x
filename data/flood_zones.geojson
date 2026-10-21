@@ -6,7 +6,7 @@
       "properties": {
         "id": "F1",
         "name": "Low-lying south-east",
-        "depth_m": 1.2,
+        "depth_m": 0.9,
         "simulated": true
       },
       "geometry": {

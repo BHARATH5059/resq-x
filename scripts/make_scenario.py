@@ -44,12 +44,12 @@ def with_node(items):
 
 # ---------- shelters (real school locations, SIMULATED capacity) ----------
 shelters = with_node([
-    {"id": "S1", "name": "Government Higher Secondary School, Velachery", "lat": 12.98799, "lon": 80.21986, "capacity": 400},
-    {"id": "S2", "name": "Chennai Higher Secondary School", "lat": 12.98522, "lon": 80.21895, "capacity": 300},
-    {"id": "S3", "name": "Guru Nanak School", "lat": 12.99067, "lon": 80.22089, "capacity": 350},
-    {"id": "S4", "name": "D.A.V Public School", "lat": 12.97230, "lon": 80.22261, "capacity": 250},
-    {"id": "S5", "name": "St. Savio Matriculation Higher Secondary School", "lat": 12.98174, "lon": 80.22619, "capacity": 200},
-    {"id": "S6", "name": "Sri Chaitanya Techno School", "lat": 12.97756, "lon": 80.21791, "capacity": 250},
+    {"id": "S1", "name": "Government Higher Secondary School, Velachery", "lat": 12.98799, "lon": 80.21986, "capacity": 1000},
+    {"id": "S2", "name": "Chennai Higher Secondary School", "lat": 12.98522, "lon": 80.21895, "capacity": 800},
+    {"id": "S3", "name": "Guru Nanak School", "lat": 12.99067, "lon": 80.22089, "capacity": 900},
+    {"id": "S4", "name": "SAN Academy", "lat": 12.97579, "lon": 80.21239, "capacity": 700},
+    {"id": "S5", "name": "St. Savio Matriculation Higher Secondary School", "lat": 12.98174, "lon": 80.22619, "capacity": 500},
+    {"id": "S6", "name": "Sri Chaitanya Techno School", "lat": 12.97756, "lon": 80.21791, "capacity": 700},
 ])
 write_csv("data/shelters.csv", shelters)
 
@@ -93,7 +93,7 @@ def box(lat0, lon0, lat1, lon1):
 
 
 flood_defs = [
-    ("F1", "Low-lying south-east", 12.972, 80.222, 12.978, 80.231, 1.2),
+    ("F1", "Low-lying south-east", 12.972, 80.222, 12.978, 80.231, 0.9),
     ("F2", "Central basin", 12.978, 80.214, 12.984, 80.222, 0.8),
     ("F3", "North canal belt", 12.985, 80.210, 12.991, 80.218, 0.5),
     ("F4", "East pocket", 12.982, 80.226, 12.988, 80.231, 0.3),

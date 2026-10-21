@@ -1,7 +1,7 @@
 id,name,lat,lon,capacity,node,snap_m
-S1,"Government Higher Secondary School, Velachery",12.98799,80.21986,400,11050668344,35
-S2,Chennai Higher Secondary School,12.98522,80.21895,300,325207279,25
-S3,Guru Nanak School,12.99067,80.22089,350,11938949875,66
-S4,D.A.V Public School,12.9723,80.22261,250,1457503240,39
-S5,St. Savio Matriculation Higher Secondary School,12.98174,80.22619,200,338461444,17
-S6,Sri Chaitanya Techno School,12.97756,80.21791,250,2407565208,26
+S1,"Government Higher Secondary School, Velachery",12.98799,80.21986,1000,11050668344,35
+S2,Chennai Higher Secondary School,12.98522,80.21895,800,325207279,25
+S3,Guru Nanak School,12.99067,80.22089,900,11938949875,66
+S4,SAN Academy,12.97579,80.21239,700,2167027610,28
+S5,St. Savio Matriculation Higher Secondary School,12.98174,80.22619,500,338461444,17
+S6,Sri Chaitanya Techno School,12.97756,80.21791,700,2407565208,26
