@@ -64,17 +64,24 @@ Edge risk: for each road edge, take its midpoint (or sample points along its geo
 
 ## 6. Module 3: Resource and shelter allocator (`resource_optimizer.py`)
 
-Use OR-Tools.
+Use OR-Tools. Take zone risk from Module 1 and routes from Module 2. All limits come from `data/` and a config dict at the top of the file (for example `BOAT_CAPACITY = 400`).
 
-**Shelter assignment.** Decision: how many people from each zone go to each available (not failed) shelter. Constraints: sum over shelters for a zone is at most `affected_people`; sum over zones for a shelter is at most its capacity; only reachable pairs are allowed. Objective: assign as many people as possible, then minimise total travel cost. `unmet_people = affected_people - assigned`. Integer variables (min-cost flow or CP-SAT).
+**Base routing.** Rescue teams, ambulances and supplies start from the rescue base node. Compute base-to-zone travel cost with the same edge costs and exclusions as Module 2 (impassable, blocked, failed bridges). A zone is "reachable from base" if a path exists. Never recompute inside loops.
 
-**Rescue teams.** Each team goes to at most one zone and each zone gets at most one team. Zones must be reachable from the base node. Maximise total `priority` of served zones, with a small penalty for travel cost. Zones with no team are reported as unserved.
+**6.1 Shelter assignment.** Decision: how many people from each zone go to each available (not failed, not full) shelter.
+- Constraints: people sent from a zone are at most its `affected_people`; people received by a shelter are at most its capacity; only pairs with a road route (Module 2 status ok) are allowed.
+- Objective: first maximise people assigned, then minimise total (people x route cost). Use integer variables (min-cost flow or CP-SAT).
+- Output per zone: assignments (shelter, people, route cost) and `unmet_people`.
 
-**Ambulances.** Same rule, plus each ambulance is paired with the nearest reachable non-failed hospital that has beds available.
+**6.2 Rescue teams.** Each team serves at most one zone, and each zone gets at most one team. Only zones with `affected_people > 0` and reachable from base are eligible. Maximise total zone `priority` served, with a small penalty for travel cost. Zones without a team are reported as unserved.
 
-**Supplies.** Distribute `food_packets` in proportion to `affected_people`, and `medical_kits` in proportion to `affected_people * vulnerable_share`, among zones reachable from the base. Use largest-remainder rounding so the totals match exactly. Unreachable zones get 0 and are reported as unmet.
+**6.3 Ambulances.** Each ambulance serves at most one zone (a zone may also have a team). Eligible: zones with `affected_people > 0` reachable from base, that also have a road route to at least one non-failed hospital with `beds_available > 0`. Rank by `priority * vulnerable_share`. Pair each ambulance with the nearest reachable hospital (lowest route cost from the zone).
 
-Every output must include unmet demand. Never ignore it silently.
+**6.4 Supplies.** Distribute `food_packets` in proportion to `affected_people`, and `medical_kits` in proportion to `affected_people * vulnerable_share`, among zones reachable from base. Use largest-remainder rounding so totals match exactly. Zones not reachable by road get 0 and are reported as unmet.
+
+**6.5 Boat rescue.** A zone is eligible if it has no road route to any available shelter, `affected_people > 0`, and flood depth is at least 0.5 m. Each boat serves at most one zone and rescues at most `BOAT_CAPACITY` people (400). Assign boats to eligible zones in order of `priority`. People rescued by boat are reported as `rescued_by_boat` and are not assigned to shelters. Final `unmet_people` = affected - assigned to shelters - rescued by boat. Boat rescue needs no roads.
+
+**6.6 Output.** For each zone: risk level, affected, assigned to shelters, rescued by boat, unmet, team (yes/no), ambulance and hospital, food and kits received. Totals: people assigned, rescued by boat, unmet, resource utilisation (resources used / resources available), total travel cost. Unmet demand is always reported, never ignored.
 
 ## 7. Module 4: Failure simulator and comparison (`failure_simulator.py`)
 
@@ -137,6 +144,9 @@ Create a tiny hand-made graph fixture (about 6 nodes, 2 shelters, 1 bridge) wher
 9. Supply totals equal the inputs exactly (food packets and medical kits).
 10. `/simulate` then `/failure` returns a diff where changed fields differ from the baseline.
 11. Baseline comparison: risk-aware routing avoids at least one flooded edge that plain shortest-path uses (test on the real graph, report the numbers).
+12. A zone cut off by impassable roads gets a boat if boats remain; if boats run out it is reported as unmet.
+13. A boat never rescues more than BOAT_CAPACITY people from a zone; the remainder is unmet.
+14. At severity 1.0 (no zone cut off) no boat is used.
 
 ## 11. Definition of done for the backend
 
