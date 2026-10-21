@@ -112,16 +112,22 @@ flood = {
 with open("data/flood_zones.geojson", "w", encoding="utf-8") as f:
     json.dump(flood, f, indent=2)
 
-# ---------- bridges available for the failure demo ----------
-bridges = [
-    {"id": "B1", "name": "Velachery Lower Flyover", "edges": [[10120160579, 12157030704]]},
-    {"id": "B2", "name": "Velachery Upper Flyover", "edges": [[10120161792, 2167149046]]},
-    {"id": "B3", "name": "Bridge segment B3", "edges": [[300162588, 300164051], [300164051, 300162588]]},
+# ---------- critical crossings for the failure demo (SIMULATED) ----------
+bridge_defs = [
+    {"id": "B1", "name": "Velachery Bypass Road crossing (simulated)", "edge": (325207488, 4265654365)},
+    {"id": "B2", "name": "Major Mukund Varadharajan Salai crossing (simulated)", "edge": (338406860, 12497489527)},
+    {"id": "B3", "name": "Vijayanagar 1st Main Road crossing (simulated)", "edge": (2167148944, 299883943)},
 ]
-for b in bridges:
-    for u, v in b["edges"]:
-        if not G.has_edge(str(u), str(v)) and not G.has_edge(u, v):
-            print(f'WARNING: edge {u}->{v} of {b["id"]} not found in graph')
+bridges = []
+for b in bridge_defs:
+    u, v = b["edge"]
+    edges = []
+    for a, c in ((u, v), (v, u)):          # include the reverse direction only if it exists
+        if G.has_edge(a, c):
+            edges.append([a, c])
+    if not edges:
+        print(f'WARNING: no edge found for {b["id"]}')
+    bridges.append({"id": b["id"], "name": b["name"], "edges": edges})
 with open("data/bridges.json", "w", encoding="utf-8") as f:
     json.dump(bridges, f, indent=2)
 

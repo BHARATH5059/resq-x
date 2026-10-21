@@ -1,35 +1,35 @@
 [
   {
     "id": "B1",
-    "name": "Velachery Lower Flyover",
+    "name": "Velachery Bypass Road crossing (simulated)",
     "edges": [
       [
-        10120160579,
-        12157030704
+        325207488,
+        4265654365
       ]
     ]
   },
   {
     "id": "B2",
-    "name": "Velachery Upper Flyover",
+    "name": "Major Mukund Varadharajan Salai crossing (simulated)",
     "edges": [
       [
-        10120161792,
-        2167149046
+        338406860,
+        12497489527
       ]
     ]
   },
   {
     "id": "B3",
-    "name": "Bridge segment B3",
+    "name": "Vijayanagar 1st Main Road crossing (simulated)",
     "edges": [
       [
-        300162588,
-        300164051
+        2167148944,
+        299883943
       ],
       [
-        300164051,
-        300162588
+        299883943,
+        2167148944
       ]
     ]
   }
