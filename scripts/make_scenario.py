@@ -74,9 +74,9 @@ zones = with_node([
 write_csv("data/population_zones.csv", zones)
 
 # ---------- rescue base (fire station) and resources ----------
-base_node, base_dist = nearest(12.97685, 80.22763)
+base_node, base_dist = nearest(12.98657, 80.21807)
 resources = {
-    "base": {"name": "Fire station (rescue base)", "lat": 12.97685, "lon": 80.22763, "node": base_node},
+    "base": {"name": "Relief base (simulated, on high ground)", "lat": 12.98657, "lon": 80.21807, "node": base_node},
     "rescue_teams": 3,
     "ambulances": 2,
     "boats": 2,
