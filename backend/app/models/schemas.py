@@ -285,3 +285,13 @@ class FailureResponse(BaseAccessibleModel):
     plan: SimulationPlan
     diff: SimulationDiff
 
+
+class SimulateRequest(BaseAccessibleModel):
+    severity: float = 1.0
+    resources: Optional[Dict[str, int]] = None
+
+
+class HealthResponse(BaseAccessibleModel):
+    status: str = "ok"
+
+
