@@ -192,3 +192,96 @@ class OptimizationTotals(BaseAccessibleModel):
 class OptimizationResult(BaseAccessibleModel):
     zones: List[ZoneOptimizationResult]
     totals: OptimizationTotals
+
+
+class MetricBeforeAfter(BaseAccessibleModel):
+    before: float
+    after: float
+    delta: float
+
+
+class TotalsDiff(BaseAccessibleModel):
+    people_assigned: MetricBeforeAfter
+    rescued_by_boat: MetricBeforeAfter
+    unmet: MetricBeforeAfter
+    total_travel_cost: MetricBeforeAfter
+
+
+class ZoneDiff(BaseAccessibleModel):
+    zone_id: str
+    zone_name: str
+    route_changed: bool
+    old_route_length: Optional[float] = None
+    new_route_length: Optional[float] = None
+    old_assigned_shelters: List[Dict[str, Any]] = Field(default_factory=list)
+    new_assigned_shelters: List[Dict[str, Any]] = Field(default_factory=list)
+    old_unmet: int
+    new_unmet: int
+
+
+class TeamMovement(BaseAccessibleModel):
+    zone_id: str
+    before: bool
+    after: bool
+    action: str
+
+
+class AmbulanceMovement(BaseAccessibleModel):
+    zone_id: str
+    before_ambulance: bool
+    after_ambulance: bool
+    before_hospital_id: Optional[str] = None
+    before_hospital_name: Optional[str] = None
+    after_hospital_id: Optional[str] = None
+    after_hospital_name: Optional[str] = None
+    action: str
+
+
+class SupplyMovement(BaseAccessibleModel):
+    zone_id: str
+    food_packets_before: int
+    food_packets_after: int
+    food_packets_delta: int
+    medical_kits_before: int
+    medical_kits_after: int
+    medical_kits_delta: int
+
+
+class ResourceMovements(BaseAccessibleModel):
+    teams: List[TeamMovement] = Field(default_factory=list)
+    ambulances: List[AmbulanceMovement] = Field(default_factory=list)
+    supplies: List[SupplyMovement] = Field(default_factory=list)
+
+
+class SimulationPlan(BaseAccessibleModel):
+    severity: float
+    risk: RiskAssessmentResult
+    routes: EvacuationRoutingResult
+    allocation: OptimizationResult
+    unmet: int
+    totals: OptimizationTotals
+
+
+class SimulationDiff(BaseAccessibleModel):
+    event_type: str
+    event_id: Optional[str] = None
+    event_details: Dict[str, Any] = Field(default_factory=dict)
+    zones: Dict[str, ZoneDiff]
+    totals: TotalsDiff
+    resource_movements: ResourceMovements
+    messages: List[str]
+    plan: Optional[SimulationPlan] = None
+
+
+class FailureEventRequest(BaseAccessibleModel):
+    type: str
+    id: Optional[str] = None
+    edge: Optional[List[int]] = None
+    amount: Optional[int] = None
+    field: Optional[str] = None
+
+
+class FailureResponse(BaseAccessibleModel):
+    plan: SimulationPlan
+    diff: SimulationDiff
+
